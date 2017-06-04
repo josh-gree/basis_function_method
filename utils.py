@@ -3,10 +3,11 @@ import numpy as np
 import odl
 
 from template import template_array
+# need to be able to control number of energies!
 from poly_phantom import poly_phantom
-from helper_functions import spectrum, compton, photo_electric, StoX
+from helper_functions import spectrum, compton, photo_electric
 from projections import poly_projection
-from derivatives import gradient, gradient_A
+from derivatives import gradient
 from xraylib_np import CS_Energy
 from solve import solve
 
@@ -14,6 +15,7 @@ from solve import solve
 Nx, Ny = 256, 256
 Np, Nd = 1024, 512
 Ne = 10
+
 Es, Is = spectrum(Ne, 1e7)
 
 space = odl.uniform_discr([-1, -1], [1, 1], [Nx, Ny], dtype='float32')
@@ -24,26 +26,32 @@ operator = odl.tomo.RayTransform(
     space, geometry, impl="astra_cuda", use_cache=True)
 fbp_op = odl.tomo.fbp_op(operator)
 
-if __name__ == '__main__':
 
-    def fwd(X): return operator(X).asarray()
+def fwd(X): return operator(X).asarray()
 
-    def bwd(X): return operator.adjoint(X).asarray()
 
-    # make data
-    phantom = poly_phantom(template_array())
-    sino = poly_projection(fwd, phantom, Is)
-    fbp = fbp_op(sino).asarray()
+def bwd(X): return operator.adjoint(X).asarray()
 
-    # gradient
-    def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
 
-    # M
-    materials = [10, 20, 30, 45, 50]
-    material_profile = CS_Energy(np.array(materials), np.array(Es))
+# make data
+phantom = poly_phantom(template_array())
+sino = poly_projection(fwd, phantom, Is)
+fbp = fbp_op(sino).asarray()
 
-    M = material_profile
+# gradient
 
-    S0 = np.ones((5, Nx, Ny))
 
-    out = solve(S0, M,  100, 200, 1, 1, fwd, grad, phantom, Is, sino)
+def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
+
+
+# M - CO + PE
+CO = compton(Es)
+CO /= np.linalg.norm(CO)
+PE = photo_electric(Es)
+PE /= np.linalg.norm(PE)
+
+M = np.vstack([CO, PE])
+
+S0 = np.ones((2, Nx, Ny))
+sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
+                         fwd, grad, phantom, Is, sino)
