@@ -8,7 +8,6 @@ from helper_functions import spectrum, compton, photo_electric, StoX
 from projections import poly_projection
 from derivatives import gradient, gradient_A
 from xraylib_np import CS_Energy
-from numpy import exp, vstack, zeros, outer
 
 # set up projectors
 Nx, Ny = 256, 256
@@ -41,7 +40,7 @@ def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom)
     for i in range(N1_iters):
         curr_x = StoX(S0, M)
 
-        S0 = S0 - stepsz_1 * gradient_A(grad(curr_x))
+        S0 = S0 - stepsz_1 * gradient_A(grad(curr_x), M)
 
         S0[S0 < 0] = 0
 
