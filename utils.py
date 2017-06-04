@@ -83,17 +83,17 @@ if __name__ == '__main__':
     # make data
     phantom = poly_phantom(template_array())
     sino = poly_projection(fwd, phantom, Is)
-    fbp = fbp_opsino).asarray()
+    fbp = fbp_op(sino).asarray()
 
     # gradient
     def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
 
     # M
-    materials=[10, 20, 30, 45, 50]
-    material_profile=CS_Energy(np.array(materials), np.array(Es))
+    materials = [10, 20, 30, 45, 50]
+    material_profile = CS_Energy(np.array(materials), np.array(Es))
 
-    M=material_profile
+    M = material_profile
 
-    S0=np.ones((5, Nx, Ny))
+    S0 = np.ones((5, Nx, Ny))
 
-    out=solve(S0, M,  100, 200, 1, 1, fwd, grad, phantom)
+    out = solve(S0, M,  100, 200, 1, 1, fwd, grad, phantom)
