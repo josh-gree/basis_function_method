@@ -39,6 +39,8 @@ phantom = poly_phantom(template_array())
 sino = poly_projection(fwd, phantom, Is)
 fbp = fbp_op(sino).asarray()
 
+dd.io.save('data.h5', {'sino': sino, 'phantom': phantom, 'fbp': fbp})
+
 # gradient
 
 
