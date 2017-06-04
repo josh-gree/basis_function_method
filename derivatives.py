@@ -35,8 +35,10 @@ def gradient(X, I, y, Nx, Ny, Np, Nd, Ne, fwd, bwd):
 
 def gradient_A(df, M, scales=None):
     if scales:
-        g = (df.reshape(Ne, -1).T.dot(M.T)).T.reshape(-1, Nx, Ny)
+        g = (df.reshape(M.shape[1], -1).T.dot(M.T)
+             ).T.reshape(-1, df.shape[1], df.shape[2])
         return g * scales[..., np.newaxis, np.newaxis]
     else:
-        g = (df.reshape(Ne, -1).T.dot(M.T)).T.reshape(-1, Nx, Ny)
+        g = (df.reshape(M.shape[1], -1).T.dot(M.T)
+             ).T.reshape(-1, df.shape[1], df.shape[2])
         return g * np.ones(M.shape[0])[..., np.newaxis, np.newaxis]
