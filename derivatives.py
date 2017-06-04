@@ -1,4 +1,5 @@
 from numpy import exp, vstack, zeros, outer
+from projections import multi_mono_prj
 
 
 def gradient(X, I, y, Nx, Ny, Np, Nd, Ne, fwd, bwd):
