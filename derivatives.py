@@ -1,3 +1,6 @@
+from numpy import exp, vstack, zeros, outer
+
+
 def gradient(X, I, y, Nx, Ny, Np, Nd, Ne, fwd, bwd):
 
     E = exp(-multi_mono_prj(fwd, X))
