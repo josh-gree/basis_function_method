@@ -46,4 +46,4 @@ if __name__ == '__main__':
 
     S0 = np.ones((5, Nx, Ny))
 
-    out = solve(S0, M,  100, 200, 1, 1, fwd, grad, phantom, Is)
+    out = solve(S0, M,  100, 200, 1, 1, fwd, grad, phantom, Is, sino)
