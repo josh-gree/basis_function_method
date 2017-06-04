@@ -54,7 +54,7 @@ PE /= np.linalg.norm(PE)
 M = np.vstack([CO, PE])
 
 S0 = np.ones((2, Nx, Ny))
-sol, objs, dists = solve(S0, M,  2, 3, .01, .1,
+sol, objs, dists = solve(S0, M,  200, 300, .01, .1,
                          fwd, grad, phantom, Is, sino)
 
 dd.io.save('COPE.h5', {'sol': sol, 'objs': objs, 'dists': dists})
