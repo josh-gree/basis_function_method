@@ -44,14 +44,41 @@ fbp = fbp_op(sino).asarray()
 def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
 
 
-# M - CO + PE
-CO = compton(Es)
-CO /= np.linalg.norm(CO)
-PE = photo_electric(Es)
-PE /= np.linalg.norm(PE)
+# # M - CO + PE
+# CO = compton(Es)
+# CO /= np.linalg.norm(CO)
+# PE = photo_electric(Es)
+# PE /= np.linalg.norm(PE)
 
-M = np.vstack([CO, PE])
+# M = np.vstack([CO, PE])
 
-S0 = np.ones((2, Nx, Ny))
+# S0 = np.ones((2, Nx, Ny))
+# sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
+#                          fwd, grad, phantom, Is, sino)
+
+
+# # M - known materials
+# materials = [14, 35, 40, 45, 50]
+# M = CS_Energy(np.array(materials), np.array(Es))
+
+# S0 = np.ones((5, Nx, Ny))
+# sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
+#                          fwd, grad, phantom, Is, sino)
+
+
+# # M - some materials, not in phantom
+# materials = [10, 23, 32, 41, 53]
+# M = CS_Energy(np.array(materials), np.array(Es))
+
+# S0 = np.ones((5, Nx, Ny))
+# sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
+#                          fwd, grad, phantom, Is, sino)
+
+
+# M - lots of materials
+materials = list(range(10, 60, 4))
+M = CS_Energy(np.array(materials), np.array(Es))
+
+S0 = np.ones((len(materials), Nx, Ny))
 sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
                          fwd, grad, phantom, Is, sino)
