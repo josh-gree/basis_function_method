@@ -95,7 +95,7 @@ def spectrum(N, flux):
     flux param can be thought of as number of emitted photons
     '''
     spectra = pickle.load(
-        open("/home/josh/basis_functions_method/data_files/E_spectra.p", "rb"))
+        open("E_spectra.p", "rb"), encoding='latin1')
     es = linspace(12, 100, N + 1)
     fs = interp(es, spectra[:, 0], spectra[:, 1])
     Es = [(x[0] + x[1]) / 2 for x in zip(es[:-1], es[1:])]
@@ -110,5 +110,5 @@ def spectrum(N, flux):
 
 
 def StoX(S, M):
-    
+
     return (S.transpose(2, 1, 0).dot(M)).transpose(2, 1, 0)

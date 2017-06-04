@@ -80,5 +80,5 @@ materials = list(range(10, 60, 4))
 M = CS_Energy(np.array(materials), np.array(Es))
 
 S0 = np.ones((len(materials), Nx, Ny))
-sol, objs, dists = solve(S0, M,  200, 300, .1, .1,
+sol, objs, dists = solve(S0, M,  120, 380, .01, .1,
                          fwd, grad, phantom, Is, sino)
