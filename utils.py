@@ -9,6 +9,7 @@ from projections import poly_projection
 from derivatives import gradient, gradient_A
 from xraylib_np import CS_Energy
 from objective import obj
+from solve import solve
 
 # set up projectors
 Nx, Ny = 256, 256
@@ -23,57 +24,6 @@ geometry = odl.tomo.Parallel2dGeometry(angle, detector)
 operator = odl.tomo.RayTransform(
     space, geometry, impl="astra_cuda", use_cache=True)
 fbp_op = odl.tomo.fbp_op(operator)
-
-
-def fwd(X): return operator(X).asarray()
-
-
-def bwd(X): return operator.adjoint(X).asarray()
-
-
-def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom):
-
-    objs = []
-    dists = []
-
-    print('Coeff optimisation')
-    print('------------------')
-    for i in range(N1_iters):
-        curr_x = StoX(S0, M)
-
-        S0 = S0 - stepsz_1 * gradient_A(grad(curr_x), M)
-
-        S0[S0 < 0] = 0
-
-        obj_val = obj(curr_x, Is, sino, fwd_op)
-        dist_val = np.linalg.norm(curr_x - phantom)
-
-        objs.append(obj_val)
-        dists.append(dist_val)
-
-        print('[iter {}] Objective val : {}, Distance to true : {}'.format(
-            i, obj_val, dist_val))
-
-    x0 = StoX(S0, M)
-
-    print('Full optimisation')
-    print('------------------')
-    for j in range(N2_iters):
-        x0 = x0 - stepsz_2 * grad(x0)
-
-        x0[x0 < 0] = 0
-
-        obj_val = obj(x0, Is, sino, fwd_op)
-        dist_val = np.linalg.norm(x0 - phantom)
-
-        objs.append(obj_val)
-        dists.append(dist_val)
-
-        print('[iter {}] Objective val : {}, Distance to true : {}'.format(
-            j, obj_val, dist_val))
-
-    return x0, objs, dists
-
 
 if __name__ == '__main__':
 
