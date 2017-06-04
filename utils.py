@@ -8,6 +8,7 @@ from helper_functions import spectrum, compton, photo_electric, StoX
 from projections import poly_projection
 from derivatives import gradient, gradient_A
 from xraylib_np import CS_Energy
+from objective import obj
 
 # set up projectors
 Nx, Ny = 256, 256
