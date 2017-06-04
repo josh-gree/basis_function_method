@@ -21,7 +21,7 @@ angle = odl.uniform_partition(0, 2 * np.pi, Np)
 geometry = odl.tomo.Parallel2dGeometry(angle, detector)
 operator = odl.tomo.RayTransform(
     space, geometry, impl="astra_cuda", use_cache=True)
-fbp = odl.tomo.fbp_op(ray_trafo_full)
+fbp = odl.tomo.fbp_op(operator)
 
 
 def fwd(X): return operator(X).asarray()
