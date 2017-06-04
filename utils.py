@@ -5,7 +5,7 @@ import odl
 from template import template_array
 from poly_phantom import poly_phantom
 from helper_functions import spectrum, compton, photo_electric, StoX
-from polyproj import multi_mono_prj, poly_projection
+from projections import poly_projection
 from derivatives import gradient, gradient_A
 from xraylib_np import CS_Energy
 
