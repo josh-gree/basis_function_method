@@ -38,7 +38,7 @@ def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom)
     print('Coeff optimisation')
     print('------------------')
     for i in range(N1_iters):
-        curr_x = StoX(S0)
+        curr_x = StoX(S0, M)
 
         S0 = S0 - stepsz_1 * gradient_A(grad(curr_x))
 
@@ -53,7 +53,7 @@ def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom)
         print('[iter {}] Objective val : {}, Distance to true : {}'.format(
             i, obj_val, dist_val))
 
-    x0 = StoX(S0)
+    x0 = StoX(S0, M)
 
     print('Full optimisation')
     print('------------------')

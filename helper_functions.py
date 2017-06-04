@@ -109,6 +109,6 @@ def spectrum(N, flux):
     return Es, Is
 
 
-def StoX(S):
-
+def StoX(S, M):
+    
     return (S.transpose(2, 1, 0).dot(M)).transpose(2, 1, 0)
