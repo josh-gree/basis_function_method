@@ -1,6 +1,7 @@
 import numpy as np
 from derivatives import gradient_A
 from helper_functions import StoX
+from objective import obj
 
 
 def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom):
