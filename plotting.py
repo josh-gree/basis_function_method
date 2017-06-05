@@ -104,7 +104,7 @@ def line_profiles(data_loc):
     S0 = sol['S0']
     sol = sol['sol']
 
-    for i in [0, 7, 15, 23, 29]:
+    for i in [0, 2, 5, 7, 9]:
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 5))
         ax.set_title('{:0.2f} KeV'.format(Es[i]))
         x = np.linspace(-1, 1, 256)
