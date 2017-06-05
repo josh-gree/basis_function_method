@@ -46,46 +46,40 @@ fbp = data['fbp']
 def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
 
 
-# # # M - CO + PE
-# CO = compton(Es)
-# CO /= np.linalg.norm(CO)
-# PE = photo_electric(Es)
-# PE /= np.linalg.norm(PE)
+# # M - CO + PE
+CO = compton(Es)
+CO /= np.linalg.norm(CO)
+PE = photo_electric(Es)
+PE /= np.linalg.norm(PE)
 
-# M = np.vstack([CO, PE])
+M = np.vstack([CO, PE])
 
-# S0 = np.ones((2, Nx, Ny))
-# sol, objs, dists = solve(S0, M,  200, 300, .01, .1,
-#                          fwd, grad, phantom, Is, sino)
+S0 = np.ones((2, Nx, Ny))
+sol, S0_, objs, dists = solve(S0, M,  200, 300, .01, .1,
+                              fwd, grad, phantom, Is, sino)
 
-# dd.io.save('COPE.h5', {'sol': sol, 'objs': objs, 'dists': dists})
-# # # M - known materials
-# materials = [14, 35, 40, 45, 50]
-# M = CS_Energy(np.array(materials), np.array(Es))
+dd.io.save('COPE.h5', {'sol': sol, 'objs': objs,
+                       'dists': dists, 'M': M, 'S0': S0_})
 
-# S0 = np.ones((5, Nx, Ny))
-# sol, objs, dists = solve(S0, M,  200, 300, .01, .1,
-#                          fwd, grad, phantom, Is, sino)
-
-# dd.io.save('known_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
-
-# # M - some materials, not in phantom
-materials = [10, 23, 32, 41, 53]
+# # M - known materials
+materials = [14, 35, 40, 45, 50]
 M = CS_Energy(np.array(materials), np.array(Es))
 
 S0 = np.ones((5, Nx, Ny))
-sol, objs, dists = solve(S0, M,  200, 300, .005, .1,
-                         fwd, grad, phantom, Is, sino)
+sol, S0_, objs, dists = solve(S0, M,  200, 300, .01, .1,
+                              fwd, grad, phantom, Is, sino)
 
-dd.io.save('rand_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
+dd.io.save('known_ms.h5', {'sol': sol, 'objs': objs,
+                           'dists': dists, 'M': M, 'S0': S0_})
 
 
-# # M - lots of materials
-# materials = list(range(10, 60, 4))
-# M = CS_Energy(np.array(materials), np.array(Es))
+# M - lots of materials
+materials = list(range(10, 60, 4))
+M = CS_Energy(np.array(materials), np.array(Es))
 
-# S0 = np.ones((len(materials), Nx, Ny))
-# sol, objs, dists = solve(S0, M,  120, 380, .01, .1,
-#                          fwd, grad, phantom, Is, sino)
+S0 = np.ones((len(materials), Nx, Ny))
+sol, S0_, objs, dists = solve(S0, M,  120, 380, .01, .1,
+                              fwd, grad, phantom, Is, sino)
 
-# dd.io.save('lots_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
+dd.io.save('lots_ms.h5', {'sol': sol, 'objs': objs,
+                          'dists': dists, 'M': M, 'S0': S0_})

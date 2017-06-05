@@ -45,4 +45,4 @@ def solve(S0, M,  N1_iters, N2_iters, stepsz_1, stepsz_2, fwd_op, grad, phantom,
         print('[iter {}] Objective val : {}, Distance to true : {}'.format(
             j, obj_val, dist_val))
 
-    return x0, objs, dists
+    return x0, S0, objs, dists
