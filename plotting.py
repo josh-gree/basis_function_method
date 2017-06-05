@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')
+
 from helper_functions import spectrum
 
 import numpy as np
