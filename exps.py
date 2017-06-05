@@ -15,7 +15,7 @@ from solve import solve
 # set up projectors
 Nx, Ny = 256, 256
 Np, Nd = 1024, 512
-Ne = 10
+Ne = 30
 
 Es, Is = spectrum(Ne, 1e7)
 
