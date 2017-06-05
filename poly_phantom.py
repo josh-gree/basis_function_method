@@ -5,16 +5,15 @@ import numpy as np
 from xraylib_np import CS_Energy
 from helper_functions import spectrum
 
-Nx, Ny = 256, 256
-Ne = 10
 
-materials = [35, 40, 45, 50]
-Es, Is = spectrum(Ne, 1e7)
-material_profile = CS_Energy(np.array(materials), np.array(Es))
-rect_profile = CS_Energy(np.array([14]), np.array(Es))
+def poly_phantom(template_array, Ne):
 
+    Nx, Ny = 256, 256
 
-def poly_phantom(template_array):
+    materials = [35, 40, 45, 50]
+    Es, Is = spectrum(Ne, 1e7)
+    material_profile = CS_Energy(np.array(materials), np.array(Es))
+    rect_profile = CS_Energy(np.array([14]), np.array(Es))
 
     air_array = template_array.reshape(Nx, Ny, 4)[:, :, 0]
     material_array = template_array.reshape(Nx, Ny, 4)[:, :, 1]

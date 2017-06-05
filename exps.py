@@ -35,11 +35,10 @@ def bwd(X): return operator.adjoint(X).asarray()
 
 
 # make data
-phantom = poly_phantom(template_array())
-sino = poly_projection(fwd, phantom, Is)
-fbp = fbp_op(sino).asarray()
-
-dd.io.save('data.h5', {'sino': sino, 'phantom': phantom, 'fbp': fbp})
+data = dd.io.load('data.h5')
+phantom = data['phantom']
+sino = data['sino']
+fbp = data['fbp']
 
 # gradient
 
