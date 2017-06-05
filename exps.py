@@ -58,26 +58,26 @@ def grad(X): return gradient(X, Is, sino, Nx, Ny, Np, Nd, Ne, fwd, bwd)
 # sol, objs, dists = solve(S0, M,  200, 300, .01, .1,
 #                          fwd, grad, phantom, Is, sino)
 
-dd.io.save('COPE.h5', {'sol': sol, 'objs': objs, 'dists': dists})
-# # M - known materials
-materials = [14, 35, 40, 45, 50]
-M = CS_Energy(np.array(materials), np.array(Es))
-
-S0 = np.ones((5, Nx, Ny))
-sol, objs, dists = solve(S0, M,  100, 400, .01, .1,
-                         fwd, grad, phantom, Is, sino)
-
-dd.io.save('known_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
-
-# # # M - some materials, not in phantom
-# materials = [10, 23, 32, 41, 53]
+# dd.io.save('COPE.h5', {'sol': sol, 'objs': objs, 'dists': dists})
+# # # M - known materials
+# materials = [14, 35, 40, 45, 50]
 # M = CS_Energy(np.array(materials), np.array(Es))
 
 # S0 = np.ones((5, Nx, Ny))
-# sol, objs, dists = solve(S0, M,  60, 440, .01, .1,
+# sol, objs, dists = solve(S0, M,  200, 300, .01, .1,
 #                          fwd, grad, phantom, Is, sino)
 
-# dd.io.save('rand_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
+# dd.io.save('known_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
+
+# # M - some materials, not in phantom
+materials = [10, 23, 32, 41, 53]
+M = CS_Energy(np.array(materials), np.array(Es))
+
+S0 = np.ones((5, Nx, Ny))
+sol, objs, dists = solve(S0, M,  200, 300, .005, .1,
+                         fwd, grad, phantom, Is, sino)
+
+dd.io.save('rand_ms.h5', {'sol': sol, 'objs': objs, 'dists': dists})
 
 
 # # M - lots of materials
