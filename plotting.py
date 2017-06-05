@@ -9,7 +9,7 @@ import deepdish as dd
 import seaborn as sb
 import pathlib
 
-Es, Is = spectrum(30, 1e7)
+Es, Is = spectrum(10, 1e7)
 
 
 def ims(data_loc):
